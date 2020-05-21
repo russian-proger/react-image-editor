@@ -77,7 +77,7 @@ function Init() {
         this.fContext.canvas.height = options.canvasSize.height;
       }
 
-      this._setState({ zoom: { initialWidth: Math.min(this._iCanvasElement.width, this._outerWrapper.offsetWidth) } });
+      this._setState({ zoom: { initialWidth: Math.min(this._iCanvasElement.width, this._outerWrapper.offsetWidth - 10) } });
   
       // Draw the image right on the initial canvas
       this.fillCanvasWithImage(this.iContext);
@@ -130,7 +130,7 @@ function Init() {
     return (
       <div
         ref={ this._outerWrapperRef }
-        onWheel={ (event) => this.handlers._onWheel(event) }
+        onWheel={ (event) => this._handlers.onWheel(event) }
         className="outer-canvas-wrapper"
         style={ styles.outer_wrapper }
       >

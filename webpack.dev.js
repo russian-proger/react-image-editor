@@ -65,11 +65,6 @@ module.exports = {
       threshold: 10240,
       minRatio: 0.8,
     }),
-    // new BrotliPlugin({
-    //   test: /\.js$|\.css$/,
-    //   threshold: 10240,
-    //   minRatio: 0.8,
-    // }),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ],
   resolve: {

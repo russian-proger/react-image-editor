@@ -1,5 +1,6 @@
 const React = require('react');
 
+require('./style.sass');
 const Constants = require('./constants');
 const Init      = require('./init');
 
@@ -75,6 +76,14 @@ function ImageEditorCore(options) {
   this._fCanvasElementRef = React.useRef(null);
 
   /**
+   * Contains event handlers
+   * @property
+   * @private
+   * @type {Object}
+   */
+  this._handlers = null;
+
+  /**
    * Count of the updates
    * @property
    * @private
@@ -121,28 +130,35 @@ function ImageEditorCore(options) {
 
   // Private Methods //
   /**
-   * Initialize an instance
+   * Initializes an instance
    * @method
    * @private
    */
   this._init = null;
 
   /**
-   * Update the DOM element
+   * Updates the DOM element
    * @method
    * @private
    */
   this._updateElement = null;
 
   /**
-   * Update instance state
-   * @public
-   * @todo upgrade this method
+   * Updates Zoom-component
+   * @method
+   * @private
+   */
+  this._updateZoom = null;
+
+  /**
+   * Updates instance state
+   * @method
+   * @private
    */
   this._setState = null;
 
   /**
-   * Update styles
+   * Updates styles
    * @method
    * @private
    */
@@ -151,6 +167,25 @@ function ImageEditorCore(options) {
 
 
   // Public Methods //
+  /**
+   * Increases zoom area following the cursor
+   * @method
+   * @public
+   * @prop {Number} factor
+   * @prop {Number} x
+   * @prop {Number} y
+   */
+  this.addZoom = null;
+
+  /**
+   * "Moves" the inner wrapper relative to the outer
+   * @method
+   * @public
+   * @prop {Number} x
+   * @prop {Number} y
+   */
+  this.addOffsetPivotPosition = null;
+
   /**
    * Save changes to the initial canvas
    * @method

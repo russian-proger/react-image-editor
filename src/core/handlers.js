@@ -4,14 +4,8 @@ const ImageEditorCore = require('./');
  * @this {ImageEditorCore}
  */
 function handlers() {
-  this.handlers = {
-    _onWheel: (event) => {
-      if (event.ctrlKey === true) {
-        // event.preventDefault();
-      }
-      // console.log(event);
-      // console.log(event.offsetX, event.offsetY);
-
+  this._handlers = {
+    onWheel: (event) => {
       if (event.deltaY !== 0) {
         if (event.ctrlKey) {
           let boundingClientRect = this._outerWrapper.getBoundingClientRect();
@@ -24,32 +18,31 @@ function handlers() {
           }
         } else {
           if (event.shiftKey) {
-            this.addOffset((event.deltaY < 0 ? -15 : 15), 0);
+            this.addOffsetPivotPosition((event.deltaY < 0 ? -15 : 15), 0);
           } else {
-            this.addOffset(0, (event.deltaY < 0 ? 15 : -15));
+            this.addOffsetPivotPosition(0, (event.deltaY < 0 ? 15 : -15));
           }
         }
       }
       
       if (event.deltaX !== 0) {
-        this.addOffset((event.deltaX > 0 ? 15 : -15), 0)
+        this.addOffsetPivotPosition((event.deltaX > 0 ? 15 : -15), 0)
       }
     },
-    _onKeyDown: (event) => {
+    onKeyDown: (event) => {
       if (event.keyCode < 256 && !this.pressedKeys[event.keyCode]) {
-        console.log(event.keyCode);
         this.pressedKeys[event.keyCode] = true;
       }
     },
-    _onKeyUp: (event) => {
+    onKeyUp: (event) => {
       if (event.keyCode < 256 && this.pressedKeys[event.keyCode]) {
         this.pressedKeys[event.keyCode] = false;
       }
     }
   }
 
-  window.addEventListener('keydown', (event) => this.handlers._onKeyDown(event));
-  window.addEventListener('keyup',   (event) => this.handlers._onKeyUp  (event));
+  window.addEventListener('keydown', (event) => this._handlers.onKeyDown(event));
+  window.addEventListener('keyup',   (event) => this._handlers.onKeyUp  (event));
   window.addEventListener('wheel',   (event) => event.ctrlKey && event.preventDefault(), {
     capture: true,
     passive: false

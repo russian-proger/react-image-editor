@@ -23,9 +23,9 @@ function Zoom() {
     this._updateZoom();
   }
 
-  this.addOffset = function(px, py) {
-    let { offsetX: ix, offsetY: iy } = this._state.zoom;
-    this._setState({ zoom: { offsetX: ix + px, offsetY: iy + py } });
+  this.addOffsetPivotPosition = function(px, py) {
+    let { offsetX: ix, offsetY: iy, factor: fc } = this._state.zoom;
+    this._setState({ zoom: { offsetX: ix + px / fc, offsetY: iy + py / fc } });
     this._updateZoom();
   }
 
