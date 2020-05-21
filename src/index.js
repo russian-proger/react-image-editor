@@ -1,7 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-require('./index.sass');
 const ImageEditorInterface  = require('./interface');
 
 function ImageEditor(props) {
