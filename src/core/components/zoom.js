@@ -6,7 +6,6 @@ const ImageEditorCore = require('./../');
  */
 function Zoom() {
   this.addZoom = function(df=1.05, _rx=0, _ry=0) {
-    // Current factor
     let cf = this._state.zoom.factor;
     let iw = this._state.zoom.initialWidth;
     let ix = this._state.zoom.offsetX;
@@ -15,7 +14,6 @@ function Zoom() {
     let { width: wi, height: hi } = this._outerWrapper.getBoundingClientRect();
     let rx = wi / cf * (_rx - _rx / df) / 2;
     let ry = hi / cf * (_ry - _ry / df) / 2;
-    // rx = 0;
 
     if (cf !== ef) {
       this._setState({ zoom: { factor: ef, offsetX: ix + rx, offsetY: iy + ry } });
