@@ -3,8 +3,8 @@ const Utils = require('./../utils');
 
 module.exports = function useOptions(_options) {
   const [options, _setOptions] = React.useState((() => {
-    let cssWidth   = (_options.cssSize.width  ?? {}) ?? 'auto';
-    let cssHeight  = (_options.cssSize.height ?? {}) ?? 'auto';
+    let cssWidth   = (_options.cssSize.width  ?? {}) ?? '100%';
+    let cssHeight  = (_options.cssSize.height ?? {}) ?? '100%';
     let canvasSize = (_options.canvasSize     ?? {});
     return {
       canvasSize: Utils.getSizeInPixels({ width: canvasSize.width ?? 'auto', height: canvasSize.height ?? 'auto' }, canvasSize.unit ?? 'pixels'),

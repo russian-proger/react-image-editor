@@ -4,8 +4,11 @@ const ReactDOM = require('react-dom');
 const ImageEditorInterface  = require('./interface');
 
 function ImageEditor(props) {
+  const [ImageEditor] = React.useState(new ImageEditorInterface(props));
+  React.useLayoutEffect(() => console.log(ImageEditor), []);
+
   return (
-    <ImageEditorInterface { ...props } />
+    <ImageEditor.element />
   )
 }
 

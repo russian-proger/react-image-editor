@@ -2,22 +2,20 @@
 .image-editor
   position: relative
 
-  .outer-canvas-wrapper
-    // Dimensions
+  // Outer canvas wrapper
+  .canvas-outer-wrapper
     width: 100%
     height: 100%
 
-    // Centering the canvas on the first wrapper
     display: flex
     align-items: center
     justify-content: center
 
-    // Others...
     background-color: #424242
     overflow: hidden
 
-    .inner-canvas-wrapper
-      // Show canvas transparent background
+    // Transparent background under the main canvas
+    .canvas-inner-wrapper
       position: relative
       box-sizing: content-box
       background-image: url(./src/images/transparent.svg)
@@ -27,6 +25,13 @@
       border: 1px solid black
       flex-shrink: 0
 
-      & > canvas
+      & > .main-canvas
         width: 100%
         height: 100%
+
+    & > .external-canvas
+      position: absolute
+      width: 100%
+      height: 100%
+      left: 0
+      top: 0

@@ -131,12 +131,22 @@ function Init() {
       <div
         ref={ this._outerWrapperRef }
         onWheel={ (event) => this._handlers.onWheel(event) }
-        className="outer-canvas-wrapper"
+        className="canvas-outer-wrapper"
         style={ styles.outer_wrapper }
       >
-        <div className="inner-canvas-wrapper" style={{ ...styles.inner_wrapper }}>
-          <canvas ref={ this._fCanvasElementRef } width={ options.canvasSize.width } height={ options.canvasSize.height } style={ styles.canvas } />
+        <div className="canvas-inner-wrapper" style={{ ...styles.inner_wrapper }}>
+          <canvas ref={ this._fCanvasElementRef }
+            className="main-canvas"
+            width={ options.canvasSize.width }
+            height={ options.canvasSize.height }
+            style={ styles.canvas }
+          />
         </div>
+        <canvas
+          className="external-canvas"
+          width ={ (this._outerWrapper ?? {}).offsetWidth  ?? 100 }
+          height={ (this._outerWrapper ?? {}).offsetHeight ?? 100 }
+        />
       </div>
     );
   };

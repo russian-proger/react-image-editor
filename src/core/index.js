@@ -203,7 +203,7 @@ function ImageEditorCore(options) {
   /**
    * @method
    * @public
-   * @returns {React.ReactElement}
+   * @returns {React.DetailedReactHTMLElement}
    */
   this.element = null;
 

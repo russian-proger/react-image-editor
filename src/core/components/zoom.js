@@ -10,10 +10,11 @@ function Zoom() {
     let iw = this._state.zoom.initialWidth;
     let ix = this._state.zoom.offsetX;
     let iy = this._state.zoom.offsetY;
+
     let ef = Math.min(Math.max(cf * df, 30 / iw), 10);
     let { width: wi, height: hi } = this._outerWrapper.getBoundingClientRect();
-    let rx = wi / cf * (_rx - _rx / df) / 2;
-    let ry = hi / cf * (_ry - _ry / df) / 2;
+    let rx = wi / cf * (_rx - _rx / (ef / cf)) / 2;
+    let ry = hi / cf * (_ry - _ry / (ef / cf)) / 2;
 
     if (cf !== ef) {
       this._setState({ zoom: { factor: ef, offsetX: ix + rx, offsetY: iy + ry } });
