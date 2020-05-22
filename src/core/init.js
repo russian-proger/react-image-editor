@@ -77,7 +77,7 @@ function Init() {
         this.fContext.canvas.height = options.canvasSize.height;
       }
 
-      this._setState({ zoom: { initialWidth: Math.min(this._iCanvasElement.width, this._outerWrapper.offsetWidth - 10) } });
+      this._setState({ zoom: { initialWidth: Math.min(this._iCanvasElement.width, this._outerWrapper.offsetWidth - 20, (this._outerWrapper.offsetHeight - 20) * (this._iCanvasElement.width / this._iCanvasElement.height)) } });
   
       // Draw the image right on the initial canvas
       this.fillCanvasWithImage(this.iContext);
