@@ -6,7 +6,7 @@ const Init      = require('./init');
 
 /**
  * @constructor
- * @prop {object} options
+ * @param {object} options
  * @returns {React.ElementType}
  */
 function ImageEditorCore(options) {
@@ -65,7 +65,7 @@ function ImageEditorCore(options) {
    * @private
    * @type {HTMLCanvasElement}
    */
-  this._fCanvasElement = null;
+  this._eCanvasElement = null;
 
   /**
    * Reference of the final result canvas
@@ -73,7 +73,23 @@ function ImageEditorCore(options) {
    * @private
    * @type {React.RefObject}
    */
-  this._fCanvasElementRef = React.useRef(null);
+  this._eCanvasElementRef = React.useRef(null);
+
+  /**
+   * Final canvas element
+   * @property
+   * @private
+   * @type {HTMLCanvasElement}
+   */
+  this._cCanvasElement = null;
+
+  /**
+   * Reference of the final result canvas
+   * @property
+   * @private
+   * @type {React.RefObject}
+   */
+  this._cCanvasElementRef = React.useRef(null);
 
   /**
    * Contains event handlers
@@ -116,7 +132,15 @@ function ImageEditorCore(options) {
    * @public
    * @type {CanvasRenderingContext2D}
    */
-  this.fContext = null;
+  this.eContext = null;
+
+  /**
+   * Context of the covering canvas
+   * @property
+   * @public
+   * @type {CanvasRenderingContext2D}
+   */
+  this.cContext = null;
 
   /**
    * Set of the pressed keys
@@ -171,9 +195,9 @@ function ImageEditorCore(options) {
    * Increases zoom area following the cursor
    * @method
    * @public
-   * @prop {Number} factor
-   * @prop {Number} x
-   * @prop {Number} y
+   * @param {Number} factor
+   * @param {Number} x
+   * @param {Number} y
    */
   this.addZoom = null;
 
@@ -181,8 +205,8 @@ function ImageEditorCore(options) {
    * "Moves" the inner wrapper relative to the outer
    * @method
    * @public
-   * @prop {Number} x
-   * @prop {Number} y
+   * @param {Number} x
+   * @param {Number} y
    */
   this.addOffsetPivotPosition = null;
 
@@ -211,7 +235,7 @@ function ImageEditorCore(options) {
    * Draw an image on the canvas with a certain mode
    * @method
    * @public
-   * @prop {CanvasRenderingContext2D} context
+   * @param {CanvasRenderingContext2D} context
    * @todo write `cover` mode
    */
   this.fillCanvasWithImage = null;
@@ -227,8 +251,8 @@ function ImageEditorCore(options) {
    * Save current changes to actions list
    * @method
    * @public
-   * @prop {HTMLCanvasElement|CanvasRenderingContext2D}
-   * @todo
+   * @param {HTMLCanvasElement|CanvasRenderingContext2D}
+   * @todo write this method
    */
   this.saveCurrentState = null;
 
