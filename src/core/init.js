@@ -1,5 +1,6 @@
 const React = require('react');
 
+const ExternalCanvas  = require('./components/external-canvas');
 const Handlers        = require('./handlers');
 const ImageEditorCore = require('./index');
 const Utils           = require('./../utils');
@@ -56,6 +57,7 @@ function Init() {
       // Loading other components
       Handlers.call(this);
       Zoom.call(this);
+      ExternalCanvas.call(this);
     })
   }
 
@@ -101,6 +103,8 @@ function Init() {
         imageHeight = context.canvas.height;
       }
 
+      console.log(`position: ${ (context.canvas.width - imageWidth) / 2 } ${ (context.canvas.height - imageHeight) / 2 }, dimensions: ${ imageWidth } ${ imageHeight }`)
+
       // Drawing the image
       context.drawImage(this._image, (context.canvas.width - imageWidth) / 2, (context.canvas.height - imageHeight) / 2, imageWidth, imageHeight);
     } else if (this._options.fillMode === 'cover') {
@@ -119,6 +123,14 @@ function Init() {
     let options = this._options;
     let styles  = this._styles;
 
+    const external_canvas_width  = (this._outerWrapper ?? {}).offsetWidth  ?? 100;
+    const external_canvas_height = (this._outerWrapper ?? {}).offsetHeight ?? 100;
+
+    React.useLayoutEffect(() => {
+      // Rendering the external canvas
+      this.renderExternalCanvas && this.renderExternalCanvas();
+    }, [external_canvas_width, external_canvas_height]);
+
     return (
       <div
         ref={ this._outerWrapperRef }
@@ -134,11 +146,14 @@ function Init() {
             style={ styles.canvas }
           />
         </div>
-        <canvas ref={ this._cCanvasElementRef }
-          className="external-canvas"
-          width ={ (this._outerWrapper ?? {}).offsetWidth  ?? 100 }
-          height={ (this._outerWrapper ?? {}).offsetHeight ?? 100 }
-        />
+        <div className="external-canvas-inner-wrapper">
+          <canvas ref={ this._cCanvasElementRef }
+            key={ `${ this._id }:external-canvas` }
+            className="external-canvas"
+            width ={ external_canvas_width  }
+            height={ external_canvas_height }
+          />
+        </div>
       </div>
     );
   };

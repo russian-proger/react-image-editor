@@ -12,6 +12,14 @@ const Init      = require('./init');
 function ImageEditorCore(options) {
   // Private properties //
   /**
+   * Unique id generating with instace of this object
+   * @property
+   * @private
+   * @type {Number} key
+   */
+  this._id = parseInt(Math.random() * 1000000);
+
+  /**
    * Options of the editor
    * @property
    * @private
@@ -239,6 +247,13 @@ function ImageEditorCore(options) {
    * @todo write `cover` mode
    */
   this.fillCanvasWithImage = null;
+
+  /**
+   * Renders external canvas
+   * @method
+   * @public
+   */
+  this.renderExternalCanvas = null;
 
   /**
    * Restore initial image

@@ -12,9 +12,9 @@ function handlers() {
           let offsetX =  2 * (event.clientX - boundingClientRect.x) / this._outerWrapper.offsetWidth  - 1;
           let offsetY = -2 * (event.clientY - boundingClientRect.y) / this._outerWrapper.offsetHeight + 1;
           if (event.deltaY > 0) {
-            this.addZoom(1 / 1.07, offsetX, offsetY);
+            this.addZoom(1 / 1.14, offsetX, offsetY);
           } else if (event.deltaY < 0) {
-            this.addZoom(1.07, offsetX, offsetY);
+            this.addZoom(1.14, offsetX, offsetY);
           }
         } else {
           if (event.shiftKey) {
@@ -47,6 +47,7 @@ function handlers() {
     capture: true,
     passive: false
   });
+  window.addEventListener('resize', () => this._updateElement());
 }
 
 module.exports = handlers;
