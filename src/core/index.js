@@ -12,6 +12,14 @@ const Init      = require('./init');
 function ImageEditorCore(options) {
   // Private properties //
   /**
+   * Cursor mode
+   * @property
+   * @private
+   * @type {String}
+   */
+  this._cursorMode = Constants.CURSOR_MODE.ACTION;
+
+  /**
    * Unique id generating with instace of this object
    * @property
    * @private
@@ -49,7 +57,7 @@ function ImageEditorCore(options) {
    * @private
    * @type {Object}
    */
-  this._styles = Constants.initialCSS();
+  this._styles = Constants.STATE.initialCSS();
 
   /**
    * Contains some data
@@ -57,7 +65,7 @@ function ImageEditorCore(options) {
    * @private
    * @type {Object}
    */
-  this._state  = Constants.initialCoreState();
+  this._state  = Constants.STATE.initialCoreState();
 
   /**
    * Initial canvas element
@@ -270,6 +278,14 @@ function ImageEditorCore(options) {
    * @todo write this method
    */
   this.saveCurrentState = null;
+
+  /**
+   * Switch cursor mode
+   * @method
+   * @public
+   * @param {String} mode
+   */
+  this.setCursorMode = null;
 
   Init.call(this);
 }

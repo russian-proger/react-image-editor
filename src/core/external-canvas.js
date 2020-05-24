@@ -1,7 +1,7 @@
-const ImageEditorCore = require('./../');
+const ImageEditorCore = require('.');
 
 /**
- * ExternalCanvas
+ * External canvas
  * @this {ImageEditorCore}
  */
 function ExternalCanvas() {

@@ -1,6 +1,6 @@
 const React = require('react');
 
-const ExternalCanvas  = require('./components/external-canvas');
+const ExternalCanvas  = require('./external-canvas');
 const Handlers        = require('./handlers');
 const ImageEditorCore = require('./index');
 const Utils           = require('./../utils');
@@ -62,9 +62,8 @@ function Init() {
   }
 
   this._setState = (newState) => this._state = ({
-    zoom: {
-      ...this._state.zoom, ...newState.zoom
-    }
+    zoom: { ...this._state.zoom, ...newState.zoom },
+    mouse: { ...this._state.mouse, ...newState.mouse },
   });
 
   this._setStyles = (newStyles) => this._styles = ({
@@ -103,8 +102,6 @@ function Init() {
         imageHeight = context.canvas.height;
       }
 
-      console.log(`position: ${ (context.canvas.width - imageWidth) / 2 } ${ (context.canvas.height - imageHeight) / 2 }, dimensions: ${ imageWidth } ${ imageHeight }`)
-
       // Drawing the image
       context.drawImage(this._image, (context.canvas.width - imageWidth) / 2, (context.canvas.height - imageHeight) / 2, imageWidth, imageHeight);
     } else if (this._options.fillMode === 'cover') {
@@ -135,6 +132,8 @@ function Init() {
       <div
         ref={ this._outerWrapperRef }
         onWheel={ (event) => this._handlers.onWheel(event) }
+        onMouseMove={ (event) => this._handlers.onMouseMove(event) }
+        onClick={ (event) => this._handlers.onMouseClick(event) }
         className="canvas-outer-wrapper"
         style={ styles.outer_wrapper }
       >
@@ -171,6 +170,12 @@ function Init() {
   
     } else {
       console.warn('Function saveCurrentState in ImageEditorCore: argument is invalid -', arg);
+    }
+  }
+
+  this.setCursorMode = function(newCursorMode) {
+    if (Object.keys(Constants.CURSOR_MODE).indexOf(newCursorMode) !== -1) {
+      this._cursorMode = newCursorMode;
     }
   }
 }

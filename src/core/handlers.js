@@ -38,6 +38,12 @@ function handlers() {
       if (event.keyCode < 256 && this.pressedKeys[event.keyCode]) {
         this.pressedKeys[event.keyCode] = false;
       }
+    },
+    onMouseMove: (event) => {
+
+    },
+    onMouseClick: (event) => {
+
     }
   }
 

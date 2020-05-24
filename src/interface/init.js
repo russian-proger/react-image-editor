@@ -15,9 +15,7 @@ function Init() {
 
   this.element = () => {
     [this._updatesCount, this._updateElement] = React.useReducer(x => x + 1, 0);
-    React.useLayoutEffect(() => {
-      this._init();
-    }, []);
+    React.useLayoutEffect(this._init.bind(this), []);
 
     const DOM = dom.bind(this);
 
