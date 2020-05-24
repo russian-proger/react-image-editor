@@ -44,4 +44,26 @@ module.exports = {
       }
     })
   },
+
+  /**
+   * Assign one object to another
+   * @param {Object} sourceObject
+   * @param {Object} assignObject
+   * @returns {Object} sourceObject
+   */
+  assignObject(sourceObject, assignObject) {
+    for (let [key, value] of Object.entries(assignObject)) {
+      if (typeof value == 'object') {
+        if (typeof sourceObject[key] === 'object') {
+          arguments.callee(sourceObject[key], value);
+        } else {
+          sourceObject[key] = value;
+        }
+      } else {
+        sourceObject[key] = value;
+      }
+    }
+
+    return sourceObject;
+  }
 }

@@ -61,24 +61,13 @@ function Init() {
     })
   }
 
-  this._setState = (newState) => this._state = ({
-    zoom: { ...this._state.zoom, ...newState.zoom },
-    mouse: { ...this._state.mouse, ...newState.mouse },
-  });
+  this._setState = (newState) => Utils.assignObject(this._state, newState);
 
-  this._setStyles = (newStyles) => this._styles = ({
-    outer_wrapper: { ...this._styles.outer_wrapper, ...newStyles.outer_wrapper },
-    inner_wrapper: { ...this._styles.inner_wrapper, ...newStyles.inner_wrapper },
-    canvas:        { ...this._styles.canvas,        ...newStyles.canvas        },
-  });
+  this._setStyles = (newStyles) => Utils.assignObject(this._styles, newStyles);
 
-  this.copyToEditable = function() {
-    this.eContext.drawImage(this._iCanvasElement, 0, 0);
-  }
+  this.copyToEditable = () => this.eContext.drawImage(this._iCanvasElement, 0, 0);
 
-  this.copyToInitial = function() {
-    this.iContext.drawImage(this._eCanvasElement, 0, 0);
-  }
+  this.copyToInitial = () => this.iContext.drawImage(this._eCanvasElement, 0, 0);
 
   this.fillCanvasWithImage = function(context) {
     // Checking the received argument
