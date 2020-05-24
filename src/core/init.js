@@ -131,18 +131,19 @@ function Init() {
     return (
       <div
         ref={ this._outerWrapperRef }
-        onWheel={ (event) => this._handlers.onWheel(event) }
-        onMouseMove={ (event) => this._handlers.onMouseMove(event) }
-        onClick={ (event) => this._handlers.onMouseClick(event) }
         className="canvas-outer-wrapper"
         style={ styles.outer_wrapper }
+
+        onClick={     (event) =>  this.dispatchEvent && this.dispatchEvent('click',     event) }
+        onMouseMove={ (event) =>  this.dispatchEvent && this.dispatchEvent('mousemove', event) }
+        onWheel={     (event) =>  this.dispatchEvent && this.dispatchEvent('wheel',     event) }
       >
         <div className="canvas-inner-wrapper" style={{ ...styles.inner_wrapper }}>
           <canvas ref={ this._eCanvasElementRef }
             className="main-canvas"
+            style={ styles.canvas }
             width={ options.canvasSize.width }
             height={ options.canvasSize.height }
-            style={ styles.canvas }
           />
         </div>
         <div className="external-canvas-inner-wrapper">

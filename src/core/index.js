@@ -111,9 +111,9 @@ function ImageEditorCore(options) {
    * Contains event handlers
    * @property
    * @private
-   * @type {Object}
+   * @type {Map<String, Array<Function>>}
    */
-  this._handlers = null;
+  this._handlers = new Map();
 
   /**
    * Count of the updates
@@ -208,14 +208,12 @@ function ImageEditorCore(options) {
 
   // Public Methods //
   /**
-   * Increases zoom area following the cursor
    * @method
    * @public
-   * @param {Number} factor
-   * @param {Number} x
-   * @param {Number} y
+   * @param {String} eventName
+   * @param {Funtion} callback
    */
-  this.addZoom = null;
+  this.addEventListener = null;
 
   /**
    * "Moves" the inner wrapper relative to the outer
@@ -225,6 +223,16 @@ function ImageEditorCore(options) {
    * @param {Number} y
    */
   this.addOffsetPivotPosition = null;
+
+  /**
+   * Increases zoom area following the cursor
+   * @method
+   * @public
+   * @param {Number} factor
+   * @param {Number} x
+   * @param {Number} y
+   */
+  this.addZoom = null;
 
   /**
    * Save changes to the initial canvas
@@ -243,6 +251,14 @@ function ImageEditorCore(options) {
   /**
    * @method
    * @public
+   * @param {String} eventName
+   * @param {Event} eventData
+   */
+  this.dispatchEvent = null;
+
+  /**
+   * @method
+   * @public
    * @returns {React.DetailedReactHTMLElement}
    */
   this.element = null;
@@ -257,9 +273,26 @@ function ImageEditorCore(options) {
   this.fillCanvasWithImage = null;
 
   /**
+   * @method
+   * @public
+   * @param {String} eventName
+   * @param {Funtion} callback
+   */
+  this.hasEventListener = null;
+
+  /**
+   * @method
+   * @public
+   * @param {String} eventName
+   * @param {Funtion} callback
+   */
+  this.removeEventListener = null;
+
+  /**
    * Renders external canvas
    * @method
    * @public
+   * @todo
    */
   this.renderExternalCanvas = null;
 
