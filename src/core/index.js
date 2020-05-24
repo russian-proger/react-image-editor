@@ -12,14 +12,6 @@ const Init      = require('./init');
 function ImageEditorCore(options) {
   // Private properties //
   /**
-   * Cursor mode
-   * @property
-   * @private
-   * @type {String}
-   */
-  this._cursorMode = Constants.CURSOR_MODE.ACTION;
-
-  /**
    * Unique id generating with instace of this object
    * @property
    * @private

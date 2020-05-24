@@ -1,4 +1,4 @@
-const ImageEditorCore = require('.');
+const ImageEditorCore = require('./');
 
 /**
  * External canvas

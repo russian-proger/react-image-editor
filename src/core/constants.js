@@ -7,19 +7,29 @@ module.exports = {
     }),
     
     initialCoreState: () => ({
+      cursorMode: 'MOVING',
       zoom: {
+        pixelRatio: 1,
         initialWidth: 0,
-        offsetX: 0,
-        offsetY: 0,
-        factor:  1
+        pivotPositionX: 0,
+        pivotPositionY: 0,
+        pixelView: false,
+        factor:  1,
       },
       mouse: {
+        pressedPositionX: 0,
+        pressedPositionY: 0,
+        releasedPositionX: 0,
+        releasedPositionY: 0,
         positionX: 0,
         positionY: 0,
+        leftButtonPressed: false,
         ctrlPressed: false,
         shiftPressed: false,
-        altPresed: false
-      }
+        altPressed: false
+      },
+      mainColor: 'black',
+      secondaryColor: 'white',
     }),
   },
   CURSOR_MODE: {

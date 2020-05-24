@@ -2,7 +2,8 @@ const React = require('react');
 
 const ExternalCanvas  = require('./external-canvas');
 const Handlers        = require('./handlers');
-const ImageEditorCore = require('./index');
+const ImageEditorCore = require('./');
+const Move            = require('./components/move');
 const Utils           = require('./../utils');
 const Zoom            = require('./components/zoom');
 
@@ -46,8 +47,12 @@ function Init() {
       }
 
       // Setting zoom state
-      this._setState({ zoom: { initialWidth: Math.min(this._iCanvasElement.width, this._outerWrapper.offsetWidth - 20, (this._outerWrapper.offsetHeight - 20) * (this._iCanvasElement.width / this._iCanvasElement.height)) } });
-  
+      let initialWidth   = Math.min(this._eCanvasElement.width, this._outerWrapper.offsetWidth - 20, (this._outerWrapper.offsetHeight - 20) * (this._eCanvasElement.width / this._eCanvasElement.height))
+      let pixelRatio     = this.iContext.canvas.width / initialWidth;
+      let pivotPositionX = initialWidth / 2;
+      let pivotPositionY = initialWidth / 2 * (this._eCanvasElement.height / this._eCanvasElement.width);
+      this._setState({ zoom: { initialWidth, pixelRatio, pivotPositionX, pivotPositionY } });
+
       // Drawing the image right on the initial canvas
       this.fillCanvasWithImage(this.iContext);
   
@@ -55,8 +60,9 @@ function Init() {
       this.copyToEditable();
 
       // Loading other components
-      Handlers.call(this);
-      Zoom.call(this);
+      Handlers      .call(this);
+      Zoom          .call(this);
+      Move          .call(this);
       ExternalCanvas.call(this);
     })
   }
@@ -124,6 +130,7 @@ function Init() {
         style={ styles.outer_wrapper }
 
         onClick={     (event) =>  this.dispatchEvent && this.dispatchEvent('click',     event) }
+        onMouseDown={ (event) =>  this.dispatchEvent && this.dispatchEvent('mousedown', event) }
         onMouseMove={ (event) =>  this.dispatchEvent && this.dispatchEvent('mousemove', event) }
         onWheel={     (event) =>  this.dispatchEvent && this.dispatchEvent('wheel',     event) }
       >
@@ -165,7 +172,7 @@ function Init() {
 
   this.setCursorMode = function(newCursorMode) {
     if (Object.keys(Constants.CURSOR_MODE).indexOf(newCursorMode) !== -1) {
-      this._cursorMode = newCursorMode;
+      this._setState({ cursorMode: newCursorMode });
     }
   }
 }

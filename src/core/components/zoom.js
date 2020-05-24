@@ -9,8 +9,8 @@ function Zoom() {
   this.addZoom = function(df=1.05, _rx=0, _ry=0) {
     let cf = this._state.zoom.factor;
     let iw = this._state.zoom.initialWidth;
-    let ix = this._state.zoom.offsetX;
-    let iy = this._state.zoom.offsetY;
+    let ix = this._state.zoom.pivotPositionX;
+    let iy = this._state.zoom.pivotPositionY;
 
     let ef = Math.min(Math.max(cf * df, 30 / iw), 10);
     let { width: wi, height: hi } = this._outerWrapper.getBoundingClientRect();
@@ -18,20 +18,28 @@ function Zoom() {
     let ry = hi / cf * (_ry - _ry / (ef / cf)) / 2;
 
     if (cf !== ef) {
-      this._setState({ zoom: { factor: ef, offsetX: ix + rx, offsetY: iy + ry } });
+      this._setState({ zoom: { factor: ef, pivotPositionX: ix + rx, pivotPositionY: iy + ry } });
     }
     this._updateZoom();
   }
 
   this.addOffsetPivotPosition = function(px, py) {
-    let { offsetX: ix, offsetY: iy, factor: fc } = this._state.zoom;
-    this._setState({ zoom: { offsetX: ix + px / fc, offsetY: iy + py / fc } });
+    let { pivotPositionX: ix, pivotPositionY: iy, factor: fc } = this._state.zoom;
+    this._setState({ zoom: { pivotPositionX: ix + px / fc, pivotPositionY: iy + py / fc } });
     this._updateZoom();
   }
 
   this._updateZoom = function() {
     let zoomOptions = this._state.zoom;
-    this._setStyles({ inner_wrapper: { width: zoomOptions.initialWidth * zoomOptions.factor, left: -zoomOptions.offsetX * zoomOptions.factor, bottom: -zoomOptions.offsetY * zoomOptions.factor } });
+    let eCanvas = this._eCanvasElement;
+    this._setStyles({
+      inner_wrapper: {
+        width: zoomOptions.initialWidth * zoomOptions.factor,
+        height: zoomOptions.initialWidth * zoomOptions.factor * (eCanvas.height / eCanvas.width),
+        left: (zoomOptions.initialWidth / 2 - zoomOptions.pivotPositionX) * zoomOptions.factor,
+        bottom: (zoomOptions.initialWidth / 2 * (this._eCanvasElement.height / this._eCanvasElement.width) - zoomOptions.pivotPositionY) * zoomOptions.factor 
+      }
+    });
     this._updateElement();
   };
   // ------------------------------
@@ -42,12 +50,13 @@ function Zoom() {
     if (event.deltaY !== 0) {
       if (event.ctrlKey) {
         let boundingClientRect = this._outerWrapper.getBoundingClientRect();
-        let offsetX =  2 * (event.clientX - boundingClientRect.x) / this._outerWrapper.offsetWidth  - 1;
-        let offsetY = -2 * (event.clientY - boundingClientRect.y) / this._outerWrapper.offsetHeight + 1;
+        // rx, ry - relative position
+        let rx =  2 * (event.clientX - boundingClientRect.x) / this._outerWrapper.offsetWidth  - 1;
+        let ry = -2 * (event.clientY - boundingClientRect.y) / this._outerWrapper.offsetHeight + 1;
         if (event.deltaY > 0) {
-          this.addZoom(1 / 1.14, offsetX, offsetY);
+          this.addZoom(1 / 1.14, rx, ry);
         } else if (event.deltaY < 0) {
-          this.addZoom(1.14, offsetX, offsetY);
+          this.addZoom(1.14, rx, ry);
         }
       } else {
         if (event.shiftKey) {
