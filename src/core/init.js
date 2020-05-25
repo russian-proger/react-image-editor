@@ -51,7 +51,9 @@ function Init() {
       let pixelRatio     = this.iContext.canvas.width / initialWidth;
       let pivotPositionX = initialWidth / 2;
       let pivotPositionY = initialWidth / 2 * (this._eCanvasElement.height / this._eCanvasElement.width);
-      this._setState({ zoom: { initialWidth, pixelRatio, pivotPositionX, pivotPositionY } });
+      let factor = Math.min(Math.max(1, 30 / initialWidth), pixelRatio * 30);
+      let pixelView = factor > pixelRatio * 3;
+      this._setState({ zoom: { factor, initialWidth, pixelRatio, pixelView, pivotPositionX, pivotPositionY } });
 
       // Drawing the image right on the initial canvas
       this.fillCanvasWithImage(this.iContext);

@@ -44,6 +44,7 @@ function Zoom() {
         left: (zoomOptions.initialWidth / 2 - zoomOptions.pivotPositionX) * zoomOptions.factor,
         bottom: (zoomOptions.initialWidth / 2 * (this._eCanvasElement.height / this._eCanvasElement.width) - zoomOptions.pivotPositionY) * zoomOptions.factor,
         imageRendering: zoomOptions.pixelView ? 'pixelated' : 'auto',
+        backgroundImage: zoomOptions.factor > zoomOptions.pixelRatio * 10 ? 'none' : undefined
       }
     });
     this._updateElement();
