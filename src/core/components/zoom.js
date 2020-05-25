@@ -20,6 +20,8 @@ function Zoom() {
     if (cf !== ef) {
       this._setState({ zoom: { factor: ef, pivotPositionX: ix + rx, pivotPositionY: iy + ry } });
     }
+
+    this.dispatchEvent('zoomupdated', {});
     this._updateZoom();
   }
 

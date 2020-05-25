@@ -47,7 +47,12 @@ function handlers() {
     // ex, ey - ending position (right bottom)
     let [sx, sy, ex, ey] = Utils.getZoomAreaCSSDimensions(this._state.zoom, this._eCanvasElement, this._outerWrapper);
 
-    return Utils.getPointPositionFromCSS(sx + rx * (ex - sx), sy + ry * (ey - sy), this._state.zoom.pixelRatio);
+    let { x: offsetX, y: offsetY } = this._outerWrapper.getBoundingClientRect();
+    // x, y - absolute position to the wrapper
+    let x = event.clientX - offsetX;
+    let y = event.clientY - offsetY;
+
+    return [...Utils.getPointPositionFromCSS(sx + rx * (ex - sx), sy + ry * (ey - sy), this._state.zoom.pixelRatio), rx, ry, x, y];
   };
 
   const commonProperties = (event) => ({
@@ -60,29 +65,39 @@ function handlers() {
     if (event.button !== 0) return;
 
     // px, py - pixel position (real)
-    let [px, py] = getPosition(event);
+    // rx, ry - relative position to the outer wrapper
+    let [px, py, rx, ry, x, y] = getPosition(event);
 
     // Updating cursor information
     this._setState({
       mouse: {
         ...commonProperties(event),
-        pressedPositionX: px,
-        pressedPositionY: py,
         leftButtonPressed: true,
+        pressedPositionX: x,
+        pressedPositionY: y,
+        pressedRealPositionX: px,
+        pressedRealPositionY: py,
+        pressedRelativePositionX: rx,
+        pressedRelativePositionY: ry,
       }
     });
   });
 
   this.addEventListener('mousemove', (event) => {
     // px, py - pixel position (real)
-    let [px, py] = getPosition(event);
+    // rx, ry - relative position to the outer wrapper
+    let [px, py, rx, ry, x, y] = getPosition(event);
 
     // Updating cursor information
     this._setState({
       mouse: {
         ...commonProperties(event),
-        positionX: px,
-        positionY: py,
+        positionX: x,
+        positionY: y,
+        realPositionX: px,
+        realPositionY: py,
+        relativePositionX: rx,
+        relativePositionY: ry,
       }
     });
   });
@@ -91,15 +106,20 @@ function handlers() {
     if (event.button !== 0) return;
 
     // px, py - pixel position (real)
-    let [px, py] = getPosition(event);
+    // rx, ry - relative position to the outer wrapper
+    let [px, py, rx, ry, x, y] = getPosition(event);
 
     // Updating cursor information
     this._setState({
       mouse: {
         ...commonProperties(event),
-        releasedPositionX: px,
-        releasedPositionY: py,
         leftButtonPressed: false,
+        releasedPositionX: x,
+        releasedPositionY: y,
+        releasedRealPositionX: px,
+        releasedRealPositionY: py,
+        releasedRelativePositionX: rx,
+        releasedRelativePositionY: ry,
       }
     });
   });
