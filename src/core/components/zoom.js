@@ -11,14 +11,17 @@ function Zoom() {
     let iw = this._state.zoom.initialWidth;
     let ix = this._state.zoom.pivotPositionX;
     let iy = this._state.zoom.pivotPositionY;
+    let pr = this._state.zoom.pixelRatio;
 
-    let ef = Math.min(Math.max(cf * df, 30 / iw), 10);
+    let ef = Math.min(Math.max(cf * df, 30 / iw), pr * 30);
+
+    // Calculating pivot's position by cursor's
     let { width: wi, height: hi } = this._outerWrapper.getBoundingClientRect();
     let rx = wi / cf * (_rx - _rx / (ef / cf)) / 2;
     let ry = hi / cf * (_ry - _ry / (ef / cf)) / 2;
 
     if (cf !== ef) {
-      this._setState({ zoom: { factor: ef, pivotPositionX: ix + rx, pivotPositionY: iy + ry } });
+      this._setState({ zoom: { factor: ef, pivotPositionX: ix + rx, pivotPositionY: iy + ry, pixelView: ef >= pr * 3 } });
     }
 
     this.dispatchEvent('zoomupdated', {});
@@ -39,7 +42,8 @@ function Zoom() {
         width: zoomOptions.initialWidth * zoomOptions.factor,
         height: zoomOptions.initialWidth * zoomOptions.factor * (eCanvas.height / eCanvas.width),
         left: (zoomOptions.initialWidth / 2 - zoomOptions.pivotPositionX) * zoomOptions.factor,
-        bottom: (zoomOptions.initialWidth / 2 * (this._eCanvasElement.height / this._eCanvasElement.width) - zoomOptions.pivotPositionY) * zoomOptions.factor 
+        bottom: (zoomOptions.initialWidth / 2 * (this._eCanvasElement.height / this._eCanvasElement.width) - zoomOptions.pivotPositionY) * zoomOptions.factor,
+        imageRendering: zoomOptions.pixelView ? 'pixelated' : 'auto',
       }
     });
     this._updateElement();
