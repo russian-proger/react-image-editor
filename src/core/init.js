@@ -1,9 +1,9 @@
 const React = require('react');
 
 const ExternalCanvas  = require('./external-canvas');
+const Grab            = require('./components/grab');
 const Handlers        = require('./handlers');
 const ImageEditorCore = require('./');
-const Move            = require('./components/move');
 const Utils           = require('./../utils');
 const Zoom            = require('./components/zoom');
 
@@ -62,7 +62,7 @@ function Init() {
       // Loading other components
       Handlers      .call(this);
       Zoom          .call(this);
-      Move          .call(this);
+      Grab          .call(this);
       ExternalCanvas.call(this);
     })
   }
